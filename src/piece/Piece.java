@@ -1,5 +1,6 @@
 package piece;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -50,6 +51,10 @@ public class Piece {
 
     public int getY(int row) {
         return row * Board.SQUARESIZE;
+    }
+
+    public void draw(Graphics2D g2) {
+        g2.drawImage(image, x, y, Board.SQUARESIZE, Board.SQUARESIZE, null);
     }
 
 }
