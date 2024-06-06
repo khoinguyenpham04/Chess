@@ -2,10 +2,7 @@ package main;
 
 import piece.*;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -17,10 +14,12 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
     Thread gameThread;
     Board board = new Board();
+    Mouse mouse = new Mouse();
 
     //Pieces
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
+    Piece activeP;
 
     //Colour of the pieces
     public static final int WHITE = 0;
@@ -31,6 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.black);
+        addMouseListener(mouse);
+        addMouseMotionListener(mouse);
 
         setPieces();
         copyPieces(pieces, simPieces);
@@ -114,6 +115,31 @@ public class GamePanel extends JPanel implements Runnable {
     //method to update the game's state, such as moving piecies.
     private void update() {
 
+        if(mouse.pressed) {
+            if(activeP == null) {
+                for(Piece piece : simPieces) {
+
+                    if(piece.color == currentColor &&
+                            piece.col == mouse.x/Board.SQUARESIZE &&
+                            piece.row == mouse.y/Board.SQUARESIZE) {
+                        activeP = piece;
+                    }
+                }
+            }
+            else {
+                //if the player is holding a piece, simulate its move
+                simulate();
+            }
+        }
+    }
+
+    private void simulate() {
+
+        activeP.x = mouse.x - Board.SQUARESIZE/2;
+        activeP.y = mouse.y - Board.SQUARESIZE/2;
+        activeP.col = activeP.getCol(activeP.x); //update the active pieces col row
+        activeP.row = activeP.getRow(activeP.y);
+
     }
 
     public void paintComponent(Graphics g) {
@@ -127,6 +153,16 @@ public class GamePanel extends JPanel implements Runnable {
         //draw the pieces
         for (Piece p : simPieces) {
             p.draw(g2);
+        }
+
+        if(activeP != null) {
+            g2.setColor(Color.white);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+            g2.fillRect(activeP.col*Board.SQUARESIZE, activeP.row*Board.SQUARESIZE, Board.SQUARESIZE, Board.SQUARESIZE);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+            //draw the active piece in the edn so it wont be hidden by the board or the colored square
+            activeP.draw(g2);
         }
     }
 
