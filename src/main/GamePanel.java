@@ -131,6 +131,15 @@ public class GamePanel extends JPanel implements Runnable {
                 simulate();
             }
         }
+
+        //to release the piece using mouse movement
+        if(!mouse.pressed) {
+            //mouse pressed == false
+            if(activeP != null) {
+                activeP.updatePosition();
+                activeP = null;
+            }
+        }
     }
 
     private void simulate() {
