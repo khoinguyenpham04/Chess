@@ -137,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
             //mouse pressed == false
             if(activeP != null) {
                 activeP.updatePosition();
-                activeP = null;
+                activeP = null; //test the commit is valid or nah
             }
         }
     }
