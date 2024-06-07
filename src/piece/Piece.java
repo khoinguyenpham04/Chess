@@ -68,6 +68,13 @@ public class Piece {
         preRow = getRow(y);
     }
 
+    public void resetPosition() {
+        col = preCol;
+        row = preRow;
+        x = getX(col);
+        y = getY(row);
+    }
+
     public boolean canMove(int targetCol, int targetRow) {
         return false;
     }

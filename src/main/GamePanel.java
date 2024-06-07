@@ -26,6 +26,10 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int BLACK = 1;
     int currentColor = WHITE;
 
+    //Boolean
+    boolean canMove;
+    boolean validSquare;
+
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -59,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Bishop(WHITE,2,7));
         pieces.add(new Bishop(WHITE,5,7));
         pieces.add(new Queen(WHITE,3,7));
-        pieces.add(new Knight(WHITE,4,7));
+        pieces.add(new King(WHITE,4,4));
 
         //black pieces
         pieces.add(new Pawn(BLACK,0,1));
@@ -77,7 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Bishop(BLACK,2,0));
         pieces.add(new Bishop(BLACK,5,0));
         pieces.add(new Queen(BLACK,3,0));
-        pieces.add(new Knight(BLACK,4,0));
+        pieces.add(new King(BLACK,4,0));
 
 
     }
@@ -136,18 +140,35 @@ public class GamePanel extends JPanel implements Runnable {
         if(!mouse.pressed) {
             //mouse pressed == false
             if(activeP != null) {
-                activeP.updatePosition();
-                activeP = null; //test the commit is valid or nah
+
+                if(validSquare) {
+                    activeP.updatePosition();
+                }
+                else{
+                    activeP.resetPosition();
+                    activeP = null; //test the commit is valid or nah
+                }
+
             }
         }
     }
 
     private void simulate() {
 
+        canMove = false;
+        validSquare = false;
+
+        //if a piece is being held, updaye its position
         activeP.x = mouse.x - Board.SQUARESIZE/2;
         activeP.y = mouse.y - Board.SQUARESIZE/2;
         activeP.col = activeP.getCol(activeP.x); //update the active pieces col row
         activeP.row = activeP.getRow(activeP.y);
+
+        //check if the piece is hovering a reacherbale square
+        if(activeP.canMove(activeP.col, activeP.row)) {
+            canMove = true;
+            validSquare = true;
+        }
 
     }
 
@@ -165,15 +186,15 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if(activeP != null) {
-            g2.setColor(Color.white);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-            g2.fillRect(activeP.col*Board.SQUARESIZE, activeP.row*Board.SQUARESIZE, Board.SQUARESIZE, Board.SQUARESIZE);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            if(canMove) {
+                g2.setColor(Color.white);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+                g2.fillRect(activeP.col*Board.SQUARESIZE, activeP.row*Board.SQUARESIZE, Board.SQUARESIZE, Board.SQUARESIZE);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
+            }
             //draw the active piece in the edn so it wont be hidden by the board or the colored square
             activeP.draw(g2);
         }
     }
-
-
 }

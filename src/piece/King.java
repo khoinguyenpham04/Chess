@@ -19,7 +19,10 @@ public class King extends Piece {
 
         if(isWithinBoard(targetCol, targetRow)) {
             //if statements to check in 8 direction for a valid King Move
-            if(Math.abs(targetCol-preCol) + Math.abs(targetRow-preRow) <= 1) {}
+            if(Math.abs(targetCol-preCol) + Math.abs(targetRow-preRow) == 1 ||
+                    Math.abs(targetCol-preCol) * Math.abs(targetRow-preRow) == 1) {
+                return true;
+            }
         }
 
         return false;
