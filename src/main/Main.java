@@ -13,6 +13,7 @@ public class Main {
         window.add(gp);
         window.pack();
 
+        //window's location on screen
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 

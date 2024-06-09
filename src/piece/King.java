@@ -24,7 +24,6 @@ public class King extends Piece {
                 return true;
             }
         }
-        //kjkjkj
         return false;
     }
 }

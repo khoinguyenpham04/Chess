@@ -107,7 +107,7 @@ public class GamePanel extends JPanel implements Runnable {
             delta += (currentTime - lastTime)/drawInterval; //measure of how many frame intervals have passed since the last update
             lastTime = currentTime;
 
-            //if delta (timepassed) is greater or equal to 1, it's time to update the game state and redraw the frame
+            //if delta (time passed) is greater or equal to 1, it's time to update the game state and redraw the frame
             if(delta >= 1) {
                 update(); //call update() method
                 repaint(); //call paintComponent(), meaning repainting it 60 times per second
