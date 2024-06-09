@@ -116,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    //method to update the game's state, such as moving piecies.
+    //method to update the game's state, such as moving pieces.
     private void update() {
 
         if(mouse.pressed) {
