@@ -63,6 +63,15 @@ public class Piece {
         return (y + Board.HALF_SQUARE_SIZE) / Board.SQUARESIZE;
     }
 
+    public int getIndex() {
+        for (int index = 0; index < GamePanel.simPieces.size(); index++) {
+            if (GamePanel.simPieces.get(index) == this) {
+                return index;
+            }
+        }
+        return 0;
+    }
+
     public void updatePosition() {
         x = getX(col);
         y = getY(row);
@@ -112,7 +121,6 @@ public class Piece {
                 hittingP = null;
             }
         }
-
         return false;
     }
 

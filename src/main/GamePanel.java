@@ -142,9 +142,16 @@ public class GamePanel extends JPanel implements Runnable {
             if(activeP != null) {
 
                 if(validSquare) {
+
+                    //Move confirmed
+
+                    //Update the piece list in case a piece has been captured and remove it during the simulation
+                    copyPieces(simPieces, pieces);
                     activeP.updatePosition();
                 }
                 else{
+                    //the move is not valid so reset everything
+                    copyPieces(pieces, simPieces);
                     activeP.resetPosition();
                     activeP = null; //test the commit is valid or nah
                 }
@@ -158,6 +165,10 @@ public class GamePanel extends JPanel implements Runnable {
         canMove = false;
         validSquare = false;
 
+        //reset the piece in every loop
+        //this is basically for restoring the removed pieces durring the simulation
+        copyPieces(pieces, simPieces);
+
         //if a piece is being held, updaye its position
         activeP.x = mouse.x - Board.SQUARESIZE/2;
         activeP.y = mouse.y - Board.SQUARESIZE/2;
@@ -167,6 +178,12 @@ public class GamePanel extends JPanel implements Runnable {
         //check if the piece is hovering a reacherbale square
         if(activeP.canMove(activeP.col, activeP.row)) {
             canMove = true;
+
+            //If hitting a piece, remove it from the list
+            if(activeP.hittingP != null) {
+                simPieces.remove(activeP.hittingP.getIndex());
+            }
+
             validSquare = true;
         }
 
