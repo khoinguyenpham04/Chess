@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import main.Board;
+import main.GamePanel;
 
 public class Piece {
 
@@ -14,6 +15,7 @@ public class Piece {
     public int x, y;
     public int col, row, preCol, preRow;
     public int color;
+    public Piece hittingP;
 
     public Piece(int color, int col, int row) {
 
@@ -83,6 +85,34 @@ public class Piece {
         if(targetCol >= 0 && targetCol <= 7 && targetRow >= 0 && targetRow <= 7) {
             return true;
         }
+        return false;
+    }
+
+    public Piece getHittingP(int targetCol, int targetRow) {
+        for(Piece piece : GamePanel.simPieces) {
+            if(piece.col == targetCol && piece.row == targetRow && piece != this) {
+                return piece;
+            }
+        }
+        return null;
+    }
+
+    public boolean isValidSquare(int targetCol, int targetRow) {
+
+        hittingP = getHittingP(targetCol, targetRow);
+
+        if(hittingP == null) { //this square is vacant
+            return true;
+        }
+        else { //This square is occupied with other pieces
+            if(hittingP.color != this.color) { //if the color is different, it can be captured
+                return true;
+            }
+            else {
+                hittingP = null;
+            }
+        }
+
         return false;
     }
 

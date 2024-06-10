@@ -21,9 +21,13 @@ public class King extends Piece {
             //if statements to check in 8 direction for a valid King Move
             if(Math.abs(targetCol-preCol) + Math.abs(targetRow-preRow) == 1 ||
                     Math.abs(targetCol-preCol) * Math.abs(targetRow-preRow) == 1) {
-                return true;
+
+                if(isValidSquare(targetCol, targetRow)) { //the king can reach this square, and it can confirmed to be a valid square
+                    return true;
+                }
             }
         }
+
         return false;
     }
 }
