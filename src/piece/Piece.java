@@ -104,6 +104,48 @@ public class Piece {
         return false;
     }
 
+    public boolean pieceIsOnStraightLine(int targetCol, int targetRow) {
+
+        // When this piece is moving to the left
+        for(int c = preCol-1; c > targetCol; c--) {
+            for(Piece piece : GamePanel.simPieces) {
+                if(piece.col == c && piece.row == targetRow) {
+                    hittingP = piece;
+                    return true;
+                }
+            }
+        }
+        //When this piece is moving to the right
+        for(int c = preCol+1; c < targetCol; c++) {
+            for(Piece piece : GamePanel.simPieces) {
+                if(piece.col == c && piece.row == targetRow) {
+                    hittingP = piece;
+                    return true;
+                }
+            }
+        }
+        //when this piece is moving up
+        for(int r = preRow-1; r > targetRow; r--) {
+            for(Piece piece : GamePanel.simPieces) {
+                if(piece.col == targetCol && piece.row == r) {
+                    hittingP = piece;
+                    return true;
+                }
+            }
+        }
+        //when this piece is moving down
+        for(int r = preRow+1; r < targetRow; r++) {
+            for(Piece piece : GamePanel.simPieces) {
+                if(piece.col == targetCol && piece.row == r) {
+                    hittingP = piece;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public Piece getHittingP(int targetCol, int targetRow) {
         for(Piece piece : GamePanel.simPieces) {
             if(piece.col == targetCol && piece.row == targetRow && piece != this) {

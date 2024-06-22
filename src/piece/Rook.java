@@ -20,7 +20,7 @@ public class Rook extends Piece {
         if(isWithinBoard(targetCol, targetRow) && isSameSquare(targetCol, targetRow) == false) {
             //Rook can move only if either col or row is the same
             if(targetCol == preCol || targetRow == preRow) {
-                if(isValidSquare(targetCol, targetRow)) {
+                if(isValidSquare(targetCol, targetRow) && pieceIsOnStraightLine(targetCol, targetRow) == false) {
                     return true;
                 }
             }
