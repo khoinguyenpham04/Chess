@@ -97,6 +97,13 @@ public class Piece {
         return false;
     }
 
+    public boolean isSameSquare(int targetCol, int targetRow) {
+        if(targetCol == preCol && targetRow == preRow) {
+            return true;
+        }
+        return false;
+    }
+
     public Piece getHittingP(int targetCol, int targetRow) {
         for(Piece piece : GamePanel.simPieces) {
             if(piece.col == targetCol && piece.row == targetRow && piece != this) {
