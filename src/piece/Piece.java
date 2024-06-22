@@ -146,6 +146,23 @@ public class Piece {
         return false;
     }
 
+    public boolean pieceIsOnDiagonalLine(int targetCol, int targetRow) {
+
+        if(targetRow < preRow) {
+            //Up left
+
+            //Up right
+        }
+
+        if(targetRow > preRow) {
+            //down left
+
+            //down right
+        }
+
+        return false;
+    }
+
     public Piece getHittingP(int targetCol, int targetRow) {
         for(Piece piece : GamePanel.simPieces) {
             if(piece.col == targetCol && piece.row == targetRow && piece != this) {
